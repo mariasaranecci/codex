@@ -10,7 +10,14 @@ class User < ApplicationRecord
 
   has_secure_password
   validates :password, length: { minimum: 6 }, allow_blank: true
-
+  def self.from_omniauth(auth)
+    # Creates a new user only if it doesn't exist
+    where(email: auth.info.email).first_or_initialize do 
+user
+      user.name = auth.info.name
+      user.email = auth.info.email
+    end
+  end
   # Returns the hash digest of the given string.
     def User.digest(string)
       cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

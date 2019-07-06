@@ -72,10 +72,8 @@ class MicropostsController < ApplicationController
   # DELETE /microposts/1.json
   def destroy
     @micropost.destroy
-    respond_to do |format|
     flash[:success] = "Micropost deleted"
     redirect_to request.referrer || root_url
-    end
   end
 
   private
